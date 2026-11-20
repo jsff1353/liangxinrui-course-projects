@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+*.db
+.build/
+backend-dist/
+dist-electron/
+dist-electron-*/
+*.spec
+
+# Node / Electron
+node_modules/
+dist/
+.env.local
+npm-debug.log*
+
+# IDE / OS
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store

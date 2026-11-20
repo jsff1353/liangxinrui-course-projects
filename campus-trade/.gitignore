@@ -1,0 +1,25 @@
+# ---------- 开发工具 ----------
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.DS_Store
+Thumbs.db
+
+# ---------- 后端 ----------
+campus-trade-backend/target/
+campus-trade-backend/uploads/
+# 打包时由前端 dist 复制进来，属于生成物，不进版本库
+campus-trade-backend/src/main/resources/static/
+*.log
+
+# ---------- 前端 ----------
+campus-trade-frontend/node_modules/
+campus-trade-frontend/dist/
+campus-trade-frontend/.vite/
+npm-debug.log*
+yarn-error.log*
+
+# ---------- 临时文件 ----------
+check-frontend.js

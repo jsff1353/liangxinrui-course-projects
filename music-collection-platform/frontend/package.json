@@ -1,0 +1,71 @@
+{
+  "name": "music-collection-desktop",
+  "version": "1.0.0",
+  "description": "在线音乐收藏管理桌面平台 - 前端 + Electron 客户端",
+  "private": true,
+  "main": "electron/main.cjs",
+  "author": "Graduation Project",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "electron:dev": "node scripts/dev-electron.cjs",
+    "prepare:pack": "node scripts/prepare-pack.cjs",
+    "pack:win": "npm run prepare:pack && npm run build && electron-builder --win --x64",
+    "pack:win:local": "npm run prepare:pack && npm run build && electron-builder --win --x64 --config.electronDist=node_modules/electron/dist"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "axios": "^1.7.9",
+    "element-plus": "^2.9.3",
+    "pinia": "^2.3.0",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8",
+    "vite": "^6.0.5"
+  },
+  "build": {
+    "appId": "cn.edu.music.collection",
+    "productName": "MusicCollection",
+    "copyright": "Music Collection Desktop",
+    "directories": {
+      "output": "../dist-electron",
+      "buildResources": "build"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json",
+      "!node_modules/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "../backend-dist",
+        "to": "backend",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": [
+        { "target": "nsis", "arch": ["x64"] },
+        { "target": "portable", "arch": ["x64"] }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "音乐收藏管理"
+    },
+    "portable": {
+      "artifactName": "MusicCollection-Portable.exe"
+    }
+  }
+}

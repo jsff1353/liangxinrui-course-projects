@@ -1,0 +1,4 @@
+# 文件批量重命名工具 - 依赖清单
+# Python 3.10 及以上（自带 tkinter、sqlite3、threading 等标准库，无需安装）
+openpyxl>=3.0        # 导出 Excel 对照表
+pyinstaller>=5.0     # 打包为 exe（仅打包时需要，运行程序不需要）

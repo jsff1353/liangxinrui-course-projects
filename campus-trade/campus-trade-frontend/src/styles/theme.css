@@ -1,0 +1,296 @@
+/* ============================================================
+   全局设计变量 + 基础重置
+   所有页面统一从这里取色、取圆角、取阴影，改一处全站生效
+   ============================================================ */
+:root {
+  --brand: #3b6ef6;
+  --brand-2: #6366f1;
+  --brand-soft: #eef2ff;
+  --ink: #1c2434;
+  --ink-2: #4a5468;
+  --muted: #8a94a6;
+  --muted-2: #a3adbd;
+  --line: #ebeff6;
+  --line-soft: #f2f5fa;
+  --page-bg: #fbfcfe;
+  --price: #ef4444;
+  --warn: #b45309;
+  --ok: #15803d;
+
+  --radius-xl: 18px;
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 10px;
+
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --shadow-xs: 0 1px 2px rgba(23, 43, 99, 0.04);
+  --shadow-sm: 0 6px 16px -10px rgba(23, 43, 99, 0.18);
+  --shadow-md: 0 12px 30px -16px rgba(23, 43, 99, 0.28), 0 2px 6px rgba(23, 43, 99, 0.04);
+  --shadow-lg: 0 22px 44px -18px rgba(23, 43, 99, 0.28), 0 6px 14px -8px rgba(23, 43, 99, 0.12);
+  --shadow-brand: 0 10px 22px -12px rgba(59, 110, 246, 0.9);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--page-bg);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', 'Segoe UI',
+    'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  font-family: inherit;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #dfe5ef;
+  border: 3px solid transparent;
+  background-clip: content-box;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #cbd4e3;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ---------- Element Plus 统一观感（圆角 / 弹层） ---------- */
+.el-button {
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+}
+
+.el-input__wrapper,
+.el-textarea__inner,
+.el-select__wrapper {
+  border-radius: var(--radius-sm);
+}
+
+.el-input__wrapper.is-focus,
+.el-select__wrapper.is-focused {
+  box-shadow: 0 0 0 1px var(--brand) inset, 0 0 0 4px rgba(59, 110, 246, 0.08);
+}
+
+.el-dialog {
+  border-radius: var(--radius-xl);
+  padding: 22px 24px;
+}
+
+.el-dialog__title {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.el-message-box {
+  border-radius: var(--radius-lg);
+}
+
+.el-tag {
+  border-radius: 7px;
+}
+
+.el-popper.is-light {
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+/* ---------- 通用白色面板 ---------- */
+.panel {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xs);
+}
+
+/* ---------- 通用页头 ---------- */
+.page-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 26px 0 18px;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.page-sub {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ---------- 状态胶囊 ---------- */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.pill::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.pill-warn {
+  background: #fff7e8;
+  color: var(--warn);
+}
+
+.pill-ok {
+  background: #e9f9ef;
+  color: var(--ok);
+}
+
+.pill-info {
+  background: #f1f4f9;
+  color: #64748b;
+}
+
+.pill-err {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.pill-primary {
+  background: var(--brand-soft);
+  color: #4f46e5;
+}
+
+/* ---------- 通用分页 ---------- */
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 30px;
+}
+
+.page-btn {
+  min-width: 38px;
+  height: 38px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: #fff;
+  color: var(--ink-2);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+}
+
+.page-btn.num {
+  padding: 0;
+}
+
+.page-btn:hover:not(:disabled):not(.active) {
+  border-color: #c7d6f9;
+  color: var(--brand);
+  transform: translateY(-1px);
+}
+
+.page-btn.active {
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  color: #fff;
+  font-weight: 600;
+  box-shadow: var(--shadow-brand);
+}
+
+.page-btn:disabled {
+  color: #c2cad8;
+  background: #f7f9fc;
+  cursor: not-allowed;
+}
+
+/* ---------- 通用空态 ---------- */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 68px 16px;
+  color: #c2cad8;
+}
+
+.empty-state .empty-title {
+  margin: 14px 0 4px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.empty-state .empty-sub {
+  margin: 0 0 18px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.empty-state .empty-btn {
+  height: 36px;
+  padding: 0 20px;
+  border: 1px solid #dbe4f7;
+  border-radius: var(--radius-sm);
+  background: #fff;
+  color: var(--brand);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+}
+
+.empty-state .empty-btn:hover {
+  background: #f5f8ff;
+  border-color: #b9caf7;
+}
+
+/* ---------- 通用内容容器 ---------- */
+.wrap {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px 56px;
+}
+
+@media (max-width: 767px) {
+  .wrap {
+    padding: 0 16px 44px;
+  }
+
+  .page-title {
+    font-size: 19px;
+  }
+}

@@ -1,0 +1,62 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: campus-trade-backend
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 时区、编码、SSL 三个参数是 MySQL 8 必备，少了容易报时区错误
+    url: jdbc:mysql://localhost:3306/campus_trade?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${DB_USERNAME:root}
+    # 密码改为环境变量注入，默认值仅用于本地开发；生产/上交环境务必设置 DB_PASSWORD
+    password: ${DB_PASSWORD:123456}
+  # 图片上传大小限制，超了会在进入 Controller 之前就被 Spring 拦掉
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 10MB
+
+mybatis-plus:
+  configuration:
+    # 下划线转驼峰: create_time -> createTime
+    map-underscore-to-camel-case: true
+    # 控制台打印 SQL，方便学习和排查
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      # 和建表语句的 AUTO_INCREMENT 对应
+      id-type: auto
+
+# 图片上传目录（相对于启动时的工作目录）
+# 用 ./uploads 是为了便携：把项目拷到别的电脑也能直接用，不用改配置
+upload:
+  path: ./uploads
+
+# 自定义 JWT 配置，由 JwtUtil 通过 @Value 读取
+jwt:
+  # HS256 要求密钥至少 32 字节。默认值仅供本地开发，生产必须用环境变量覆盖；
+  # 换密钥会让已签发的 token 全部失效（相当于强制所有人重新登录）。
+  secret: ${JWT_SECRET:campus-trade-jwt-secret-please-change-this-in-production-2024}
+  # 过期时间: 24 小时(毫秒)
+  expire: 86400000
+
+# 跨域白名单。默认只放行本机 Vite 端口；手机/另一台电脑访问时
+# 用环境变量显式加具体源，例如 CORS_ALLOWED_ORIGINS=http://localhost:[*],http://192.168.1.10:5173
+# 不再默认放行整个 192.168/172/10 内网段（那会让内网任意站点带凭证调用接口）。
+cors:
+  allowed-origins: "${CORS_ALLOWED_ORIGINS:http://localhost:[*],http://127.0.0.1:[*]}"
+
+# 大模型配置（智谱 GLM-4-Flash，接口协议与 OpenAI 完全兼容）
+# 不填 api-key 也不会报错：AI 模块会自动降级为本地关键词检索 + 模板文案
+ai:
+  # 不再硬编码真实 Key：默认值留空，未配置时 AI 模块自动降级为本地关键词检索，不影响其他功能。
+  # 本地开发/答辩时二选一：
+  #   1) 设置系统环境变量 AI_API_KEY=你的Key（推荐，Key 不进代码库）
+  #   2) 运行时临时指定：java -jar -DAI_API_KEY=你的Key xxx.jar
+  # 警告：任何写进 yml/文档的真实 Key 都要视为已泄露，第一时间去智谱后台吊销轮换。
+  api-key: ${AI_API_KEY:}
+  base-url: https://open.bigmodel.cn/api/paas/v4
+  model: glm-4-flash
+  # 大模型首字延迟常有 2~5 秒，读超时别设太短
+  timeout: 20000
